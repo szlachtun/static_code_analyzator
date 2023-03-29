@@ -68,13 +68,13 @@ def scan_code(code, _path):
         comment_start_index = code[line].find("#")
 
         # S001 check
-        if len(code[line]) > 49:
+        if len(code[line]) > 120:
             output_the_error(_path, line, 0)
 
         # S002 check
         if len(code[line]) >= 5:
-            identation = len(code[line]) - len(code[line].lstrip(" "))
-            if identation % 4 != 0:
+            indentation = len(code[line]) - len(code[line].lstrip(" "))
+            if indentation % 4 != 0:
                 output_the_error(_path, line, 1)
 
         # S003 check
@@ -101,7 +101,7 @@ def scan_code(code, _path):
                 output_the_error(_path, line, 5)
 
         # S007 check
-        if re.search(r"[class|def]\s{2,}", code[line]):
+        if re.search(r"(class|def)\s{2,}", code[line]):
             output_the_error(_path, line, 6)
 
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         exit(print("error. 2 positional arguments expected."))
 
-    path = sys.argv[1].lower()
+    path = sys.argv[1]
     if not exists(path):
         exit(print('path does not exist'))
 
